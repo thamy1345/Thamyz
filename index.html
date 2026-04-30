@@ -1735,6 +1735,47 @@ const contObs = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 const contactEl = document.getElementById('contact');
 if (contactEl) contObs.observe(contactEl);
+
+/* ───────── STAT COUNT ON PAGE LOAD ───────── */
+
+function animateStat(el, target, suffix = '') {
+  let current = 0;
+  const duration = 1200; // total animation time (ms)
+  const startTime = performance.now();
+
+  function update(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+
+    // easeOutCubic (smooth premium feel)
+    const eased = 1 - Math.pow(1 - progress, 3);
+
+    current = Math.floor(eased * target);
+    el.textContent = current + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target + suffix;
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+/* ───────── RUN ON LOAD ───────── */
+window.addEventListener('load', () => {
+  document.querySelectorAll('.sNnum').forEach(el => {
+    const text = el.textContent.trim();
+    const num = parseInt(text);
+    const suffix = text.replace(/[0-9]/g, '');
+
+    if (!isNaN(num)) {
+      el.textContent = '0' + suffix; // reset to zero first
+      animateStat(el, num, suffix);
+    }
+  });
+});
+
 </script>
 </body>
-                                        </html>
+                         </html>
