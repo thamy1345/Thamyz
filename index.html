@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 /* ════════════════════════════════════════════
    DESIGN TOKENS — The DNA of everything
@@ -911,11 +912,96 @@ section { padding:clamp(80px,11vh,150px) clamp(24px,5.5vw,88px); position:relati
    CONTACT
 ════════════════════════════════════════════ */
 #contact {
-  background:var(--ink-2);
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:clamp(44px,7vw,110px); align-items:start;
-  position:relative; overflow:hidden;
+  background: var(--ink-2);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+  position: relative;
+  overflow: hidden;
 }
+.cMapWrap {
+  padding-top: clamp(40px, 7vh, 70px);
+  position: relative;
+  z-index: 2;
+}
+
+.cMapLabel {
+  font-size: 0.54rem;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: var(--acid);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cMapLabel::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--acid);
+}
+
+.cMapFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+  border: 1px solid var(--line-hi);
+}
+
+/* Dark overlay to match site palette */
+.cMapFrame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 15, 0.35);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+.cMapFrame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(100%) invert(92%) contrast(90%) brightness(0.75) hue-rotate(155deg);
+  transform: scale(1.02);
+}
+
+.cMapPing {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(6, 6, 15, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 255, 0, 0.18);
+  padding: 8px 14px;
+  font-size: 0.52rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bone-60);
+}
+.cMapPing .statusDot { background: var(--acid); box-shadow: 0 0 8px var(--acid); }
+
+/* Responsive */
+@media(max-width: 1100px) {
+  #contact { grid-template-columns: 1fr 1fr; }
+  .cMapWrap { grid-column: 1 / -1; }
+  .cMapFrame { aspect-ratio: 16/6; }
+}
+@media(max-width: 900px) {
+  #contact { grid-template-columns: 1fr; }
+  .cMapWrap { padding-top: 0; }
+  .cMapFrame { aspect-ratio: 16/7; }
+}
+
 #contact::before {
   content:''; position:absolute; top:-400px; right:-200px;
   width:900px; height:900px;
@@ -1125,6 +1211,7 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
   <a href="#services">Services</a>
   <a href="#work">Work</a>
   <a href="#skSec">Skills</a>
+  
   <a href="#contact" class="mCta">Hire Me</a>
 </div>
 
@@ -1169,13 +1256,13 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
 
     <div class="hStats">
       <div class="hStat"><div class="hStat-n">4+</div><div class="hStat-l">Years</div></div>
-      <div class="hStat"><div class="hStat-n">30+</div><div class="hStat-l">Projects</div></div>
+      <div class="hStat"><div class="hStat-n">3+</div><div class="hStat-l">Projects</div></div>
       <div class="hStat"><div class="hStat-n">12+</div><div class="hStat-l">Clients</div></div>
       <div class="hStat"><div class="hStat-n">100%</div><div class="hStat-l">On-Time</div></div>
     </div>
 
     <div class="hCta">
-      <a href="#work" class="btnPrime">View Work &nbsp;→</a>
+      <a href="#work" class="btnPrime">Show Work &nbsp;→</a>
       <a href="#contact" class="btnGhost">Let's Talk</a>
     </div>
   </div>
@@ -1329,7 +1416,7 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
         <div class="aBar"><div class="aBarFill" style="width:60%"></div></div>
       </div>
       <div class="aSkillItem">
-        <div class="aSkillHd"><span class="aSkillName">React</span><span class="aSkillPct">50%</span></div>
+        <div class="aSkillHd"><span class="aSkillName">Laravel</span><span class="aSkillPct">50%</span></div>
         <div class="aBar"><div class="aBarFill" style="width:50%"></div></div>
       </div>
       <div class="aSkillItem">
@@ -1343,8 +1430,7 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
     <div class="aFloatCard c1"><div class="aCardVal">30+</div><div class="aCardLbl">Projects Shipped</div></div>
     <div class="aFloatCard c2"><div class="aCardVal">100%</div><div class="aCardLbl">On-Time Delivery</div></div>
     <div class="aPhoto">
-      <img src="ola.png" alt="Haitham" onerror="this.style.display='none';this.parentElement.style.background='var(--ink-3)'">
-      <div class="aPhotoAcidLine"></div>
+<img src="{{ asset('images/ola.png') }}" alt="Haitham" onerror="this.style.display='none';this.parentElement.style.background='var(--ink-3)'">      <div class="aPhotoAcidLine"></div>
       <div class="aPhotoCap"><strong>HAITHAM</strong><span>Full Stack Developer</span></div>
     </div>
   </div>
@@ -1363,43 +1449,34 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
     <div class="wItem">
       <span class="wNum">01</span>
       <div>
-        <div class="wTitle">E-Commerce Platform</div>
-        <div class="wSub">Full-stack commerce solution</div>
+        <div class="wTitle">Tum-Chatbot</div>
+        <div class="wSub">AI_chatbot_for_TUM</div>
       </div>
-      <div class="wTags"><span class="wTag">React</span><span class="wTag">Node.js</span><span class="wTag">PostgreSQL</span></div>
-      <span class="wYear">2024</span>
-      <div class="wPeek"><div class="wPeekLabel">E-COMM</div></div>
+      <div class="wTags"><span class="wTag">PHP</span><span class="wTag">Laravel</span><span class="wTag">HTML/CSS/Js</span></div>
+      <span class="wYear">2026</span>
+      <div class="wPeek"><div class="wPeekLabel">Chatbot</div></div>
     </div>
     <div class="wItem">
       <span class="wNum">02</span>
       <div>
-        <div class="wTitle">Analytics Dashboard</div>
-        <div class="wSub">Data visualisation platform</div>
+        <div class="wTitle">School_Finance_sytem</div>
+        <div class="wSub">Finance_management_sytem</div>
       </div>
-      <div class="wTags"><span class="wTag">Next.js</span><span class="wTag">D3.js</span><span class="wTag">REST API</span></div>
-      <span class="wYear">2024</span>
-      <div class="wPeek"><div class="wPeekLabel">ANALYTICS</div></div>
+      <div class="wTags"><span class="wTag">PHP</span><span class="wTag">Laravel</span><span class="wTag">HTM/CSS/Js</span></div>
+      <span class="wYear">2026</span>
+      <div class="wPeek"><div class="wPeekLabel">Finanace_system</div></div>
     </div>
     <div class="wItem">
       <span class="wNum">03</span>
       <div>
-        <div class="wTitle">SaaS Management App</div>
-        <div class="wSub">Enterprise workflow tool</div>
+        <div class="wTitle">Sales_CRM</div>
+        <div class="wSub">Sales_management_sytem</div>
       </div>
-      <div class="wTags"><span class="wTag">PHP</span><span class="wTag">Laravel</span><span class="wTag">Vue.js</span></div>
-      <span class="wYear">2023</span>
-      <div class="wPeek"><div class="wPeekLabel">SAAS</div></div>
+      <div class="wTags"><span class="wTag">PHP</span><span class="wTag">Laravel</span><span class="wTag">HTML/CSS/Js</span></div>
+      <span class="wYear">2026</span>
+      <div class="wPeek"><div class="wPeekLabel">CRM</div></div>
     </div>
-    <div class="wItem">
-      <span class="wNum">04</span>
-      <div>
-        <div class="wTitle">Real-Time Chat System</div>
-        <div class="wSub">WebSocket-powered messaging</div>
-      </div>
-      <div class="wTags"><span class="wTag">WebSockets</span><span class="wTag">Node.js</span><span class="wTag">MongoDB</span></div>
-      <span class="wYear">2023</span>
-      <div class="wPeek"><div class="wPeekLabel">REALTIME</div></div>
-    </div>
+        
   </div>
 </section>
 
@@ -1415,55 +1492,564 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
   <div class="skGrid" data-sr>
     <div class="sk"><div class="skName">HTML / CSS</div><div class="skLevel">Advanced</div></div>
     <div class="sk"><div class="skName">JavaScript</div><div class="skLevel">Advanced</div></div>
-    <div class="sk"><div class="skName">TypeScript</div><div class="skLevel">Intermediate</div></div>
-    <div class="sk"><div class="skName">React</div><div class="skLevel">Intermediate</div></div>
-    <div class="sk"><div class="skName">Next.js</div><div class="skLevel">Intermediate</div></div>
-    <div class="sk"><div class="skName">Node.js</div><div class="skLevel">Advanced</div></div>
     <div class="sk"><div class="skName">PHP</div><div class="skLevel">Intermediate</div></div>
     <div class="sk"><div class="skName">Laravel</div><div class="skLevel">Intermediate</div></div>
     <div class="sk"><div class="skName">MySQL</div><div class="skLevel">Advanced</div></div>
-    <div class="sk"><div class="skName">PostgreSQL</div><div class="skLevel">Intermediate</div></div>
-    <div class="sk"><div class="skName">MongoDB</div><div class="skLevel">Intermediate</div></div>
-    <div class="sk"><div class="skName">REST APIs</div><div class="skLevel">Advanced</div></div>
-    <div class="sk"><div class="skName">Git / GitHub</div><div class="skLevel">Advanced</div></div>
     <div class="sk"><div class="skName">Docker</div><div class="skLevel">Intermediate</div></div>
     <div class="sk"><div class="skName">Linux</div><div class="skLevel">Intermediate</div></div>
     <div class="sk"><div class="skName">Figma</div><div class="skLevel">Intermediate</div></div>
   </div>
 </section>
 
-<!-- BLOG -->
+<!-- BLOG SECTION -->
 <section id="blog">
   <div data-sr>
     <div class="sTag"><span class="sTagN">06</span>&nbsp;&nbsp;Writing</div>
     <h2 class="sHL">Thinking<br><em>Out Loud</em></h2>
   </div>
   <div class="blogGrid">
-    <div class="post" data-sr>
+
+    <div class="post" data-sr data-post="0">
       <div class="postKind">Essay</div>
       <h3 class="postTitle">Algorithms & Data Structures Still Matter</h3>
       <p class="postExcerpt">How the foundations of computer science shape every line of code we write — and why they still matter in the age of abstraction.</p>
-      <div class="postFoot"><span class="postRead">5 min read</span><div class="postArrow">→</div></div>
+      <div class="postFoot">
+        <span class="postRead">5 min read</span>
+        <div class="postArrow" role="button" aria-label="Read article" tabindex="0">→</div>
+      </div>
     </div>
-    <div class="post" data-sr data-d="1">
+
+    <div class="post" data-sr data-d="1" data-post="1">
       <div class="postKind">Deep Dive</div>
       <h3 class="postTitle">React Architecture at Scale</h3>
       <p class="postExcerpt">Patterns I've learned building large-scale React applications: state management, component design, and avoiding the complexity trap.</p>
-      <div class="postFoot"><span class="postRead">8 min read</span><div class="postArrow">→</div></div>
+      <div class="postFoot">
+        <span class="postRead">8 min read</span>
+        <div class="postArrow" role="button" aria-label="Read article" tabindex="0">→</div>
+      </div>
     </div>
-    <div class="post" data-sr data-d="2">
+
+    <div class="post" data-sr data-d="2" data-post="2">
       <div class="postKind">Deep Dive</div>
       <h3 class="postTitle">JavaScript Internals Demystified</h3>
       <p class="postExcerpt">Event loop, closures, prototypal inheritance — understanding the engine beneath the language makes you a fundamentally better engineer.</p>
-      <div class="postFoot"><span class="postRead">10 min read</span><div class="postArrow">→</div></div>
+      <div class="postFoot">
+        <span class="postRead">10 min read</span>
+        <div class="postArrow" role="button" aria-label="Read article" tabindex="0">→</div>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  
+<!-- ═══════════════════════════════════════════════════════
+     ARTICLE READER MODAL
+═══════════════════════════════════════════════════════ -->
+<div id="articleModal" role="dialog" aria-modal="true" aria-labelledby="artTitle">
+  <div id="articleBackdrop"></div>
+  <div id="articleDrawer">
 
+    <!-- Close -->
+    <button id="artClose" aria-label="Close article">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
+    </button>
+
+    <!-- Progress bar -->
+    <div id="artProgress"><div id="artProgressFill"></div></div>
+
+    <!-- Scrollable content -->
+    <div id="articleScroll">
+
+      <!-- Meta header -->
+      <div id="artMeta">
+        <span id="artKind"></span>
+        <span id="artReadTime"></span>
+      </div>
+
+      <h2 id="artTitle"></h2>
+      <div id="artSubline"></div>
+
+      <!-- Article body -->
+      <div id="artBody"></div>
+
+      <!-- Next article nav -->
+      <div id="artNav">
+        <button id="artPrev">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg>
+          Previous
+        </button>
+        <span id="artNavLabel"></span>
+        <button id="artNext">
+          Next
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MODAL STYLES  (scoped — won't bleed into your existing CSS)
+═══════════════════════════════════════════════════════ -->
+<style>
+/* ── Modal overlay ── */
+#articleModal {
+  position: fixed; inset: 0; z-index: 2000;
+  pointer-events: none; visibility: hidden;
+}
+#articleModal.open {
+  pointer-events: all; visibility: visible;
+}
+
+/* ── Backdrop ── */
+#articleBackdrop {
+  position: absolute; inset: 0;
+  background: rgba(8,8,16,0.82);
+  backdrop-filter: blur(14px) saturate(1.4);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+#articleModal.open #articleBackdrop { opacity: 1; }
+
+/* ── Drawer ── */
+#articleDrawer {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: min(700px, 100vw);
+  background: #0d0d1a;
+  border-left: 1px solid rgba(200,255,0,0.08);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+  overflow: hidden;
+}
+#articleModal.open #articleDrawer { transform: translateX(0); }
+
+/* ── Progress bar ── */
+#artProgress {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: rgba(200,255,0,0.06); z-index: 2;
+}
+#artProgressFill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #c8ff00, rgba(200,255,0,0.4));
+  transition: width 0.1s linear;
+}
+
+/* ── Close button ── */
+#artClose {
+  position: absolute; top: 22px; right: 24px; z-index: 10;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(240,237,232,0.04);
+  border: 1px solid rgba(240,237,232,0.07);
+  color: rgba(240,237,232,0.35);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+#artClose:hover {
+  background: rgba(200,255,0,0.08);
+  border-color: rgba(200,255,0,0.25);
+  color: #c8ff00;
+  transform: rotate(90deg);
+}
+
+/* ── Scrollable area ── */
+#articleScroll {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 64px clamp(28px,6vw,64px) 64px;
+  scroll-behavior: smooth;
+}
+#articleScroll::-webkit-scrollbar { width: 3px; }
+#articleScroll::-webkit-scrollbar-track { background: transparent; }
+#articleScroll::-webkit-scrollbar-thumb { background: rgba(200,255,0,0.15); border-radius: 99px; }
+
+/* ── Meta line ── */
+#artMeta {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 24px;
+}
+#artKind {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.56rem; letter-spacing: 0.45em; text-transform: uppercase;
+  color: #c8ff00; opacity: 0.6;
+  border: 1px solid rgba(200,255,0,0.2);
+  padding: 3px 10px;
+}
+#artReadTime {
+  font-size: 0.58rem; letter-spacing: 0.22em;
+  color: rgba(240,237,232,0.25);
+  display: flex; align-items: center; gap: 6px;
+}
+#artReadTime::before {
+  content: ''; display: inline-block;
+  width: 18px; height: 1px; background: rgba(240,237,232,0.15);
+}
+
+/* ── Title ── */
+#artTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 0.03em; line-height: 0.9;
+  color: #f0ede8; margin-bottom: 16px;
+}
+#artSubline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 300;
+  font-size: clamp(1rem, 1.4rem, 1.6rem);
+  line-height: 1.6; color: rgba(240,237,232,0.35);
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(240,237,232,0.06);
+}
+
+/* ── Article body ── */
+#artBody {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.05rem, 1.15rem, 1.25rem);
+  line-height: 1.95; color: rgba(240,237,232,0.62);
+}
+#artBody p { margin-bottom: 1.5em; }
+#artBody h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  letter-spacing: 0.06em; color: #f0ede8;
+  margin: 2.2em 0 0.8em;
+}
+#artBody blockquote {
+  border-left: 2px solid #c8ff00;
+  padding: 2px 0 2px 24px;
+  margin: 2em 0;
+  font-style: italic;
+  color: rgba(240,237,232,0.45);
+}
+#artBody code {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82em;
+  background: rgba(200,255,0,0.06);
+  border: 1px solid rgba(200,255,0,0.1);
+  padding: 2px 7px; border-radius: 4px;
+  color: #c8ff00;
+}
+#artBody ul {
+  list-style: none; padding: 0;
+  margin-bottom: 1.5em;
+}
+#artBody ul li {
+  padding-left: 20px; position: relative;
+  margin-bottom: 0.5em;
+}
+#artBody ul li::before {
+  content: '◆'; position: absolute; left: 0;
+  color: #c8ff00; font-size: 0.45em;
+  top: 0.6em; opacity: 0.5;
+}
+#artBody .artHighlight {
+  background: rgba(200,255,0,0.04);
+  border: 1px solid rgba(200,255,0,0.1);
+  border-radius: 8px; padding: 20px 24px;
+  margin: 2em 0;
+}
+#artBody .artHighlight strong {
+  display: block; font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: #c8ff00; margin-bottom: 10px; opacity: 0.7;
+}
+
+/* ── Prev / Next nav ── */
+#artNav {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(240,237,232,0.06);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+#artNavLabel {
+  font-size: 0.55rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(240,237,232,0.15);
+}
+#artPrev, #artNext {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(240,237,232,0.07);
+  color: rgba(240,237,232,0.35);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 10px 16px; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+#artPrev:hover, #artNext:hover {
+  background: rgba(200,255,0,0.06);
+  border-color: rgba(200,255,0,0.3);
+  color: #c8ff00;
+}
+#artPrev:disabled, #artNext:disabled {
+  opacity: 0.15; pointer-events: none;
+}
+
+/* ── Post card — make whole card clickable ── */
+.post { cursor: pointer; }
+.postArrow { cursor: pointer; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════
+     BLOG MODAL JAVASCRIPT
+═══════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Article data ── */
+  const ARTICLES = [
+    {
+      kind:     'Essay',
+      readTime: '5 min read',
+      title:    'Algorithms & Data Structures Still Matter',
+      subline:  'The foundations of computer science never went out of style — they just got buried under abstraction.',
+      body: `
+        <p>Every few years the tech industry convinces itself that fundamentals no longer matter. Frameworks are smarter. Libraries are faster. Surely you don't need to understand a hash table when your ORM handles all of that.</p>
+        <p>Then production breaks at 2 AM and nobody on the team can explain why a nested loop is eating 100% CPU.</p>
+
+        <h3>Why They Still Matter</h3>
+        <p>Algorithms and data structures are not trivia. They're the vocabulary of reasoning about problems. When you deeply understand why a <code>HashMap</code> is O(1) average and O(n) worst, you stop writing code that accidentally triggers the worst case.</p>
+
+        <blockquote>"Give me six hours to chop down a tree and I will spend the first four sharpening the axe." — Abraham Lincoln</blockquote>
+
+        <p>The same logic applies to software. The more deeply you understand the structures beneath your abstractions, the faster you can reason about performance, correctness, and edge cases.</p>
+
+        <h3>The Real-World Impact</h3>
+        <div class="artHighlight">
+          <strong>A true story from production</strong>
+          A startup spent three months optimising their database queries. Response times barely improved. The real problem? A quadratic algorithm in their matching engine — O(n²) where n was growing by 10% every week. One afternoon with a proper understanding of graph traversal cut their runtime by 97%.
+        </div>
+
+        <p>The lesson isn't that you should memorise every algorithm. It's that you should build the <em>intuition</em> to recognise when a problem is fundamentally algorithmic, not infrastructural.</p>
+
+        <h3>Where to Start</h3>
+        <ul>
+          <li>Master the Big-O hierarchy — don't just memorise it, feel it</li>
+          <li>Implement a hash table, a binary search tree, and a graph from scratch — once</li>
+          <li>Study the algorithms behind the tools you use daily: how does your DB index work?</li>
+          <li>Practice on real constraints, not toy problems</li>
+        </ul>
+
+        <p>The goal isn't to become a competitive programmer. The goal is to never be blindsided by your own code.</p>
+      `
+    },
+    {
+      kind:     'Deep Dive',
+      readTime: '8 min read',
+      title:    'React Architecture at Scale',
+      subline:  'The patterns that separate maintainable React codebases from the ones nobody wants to touch.',
+      body: `
+        <p>Every React codebase starts clean. Six months and a dozen developers later, you have components that do five things, state scattered across three different stores, and a prop-drilling hierarchy three screens deep.</p>
+        <p>This is a solved problem. The solutions just require discipline.</p>
+
+        <h3>The Fundamental Mistake</h3>
+        <p>Most React architecture problems come from one root cause: <em>components that know too much</em>. A component that fetches its own data, transforms it, renders UI, and handles side effects is doing four jobs. Split it.</p>
+
+        <div class="artHighlight">
+          <strong>The Rule of One Concern</strong>
+          Every component should answer yes to exactly one of these: Does it fetch data? Does it transform data? Does it render UI? Does it handle interaction? If it answers yes to more than one — break it apart.
+        </div>
+
+        <h3>State Management in 2025</h3>
+        <p>You probably don't need Redux. You probably don't need Zustand either. Before reaching for a global state library, ask: can this state live closer to where it's used?</p>
+        <ul>
+          <li>Local state for UI concerns — open/closed, active tab, hover state</li>
+          <li>Server state via React Query or SWR — stop duplicating server data in your store</li>
+          <li>Global state only for genuinely shared, non-server data — auth, theme, locale</li>
+          <li>URL state for anything that should survive a page refresh</li>
+        </ul>
+
+        <h3>The Folder Structure That Scales</h3>
+        <p>Feature-based folders beat type-based folders at scale. <code>src/features/checkout/</code> containing everything checkout-related is far easier to navigate — and delete — than <code>src/components/</code>, <code>src/hooks/</code>, <code>src/utils/</code> each containing a dozen checkout files.</p>
+
+        <blockquote>"Architecture is the decisions that are hard to change later. Make fewer of them early, and make them reversible when you can."</blockquote>
+
+        <h3>Performance Without Premature Optimisation</h3>
+        <p>Default to no optimisation. Profile first. <code>useMemo</code> and <code>useCallback</code> have a cost — the memoisation itself. Don't pay that cost until you've measured that you need to.</p>
+        <p>When you do optimise: start with reducing renders before you start optimising individual renders.</p>
+      `
+    },
+    {
+      kind:     'Deep Dive',
+      readTime: '10 min read',
+      title:    'JavaScript Internals Demystified',
+      subline:  'What\'s actually happening beneath the syntax — and why it makes you a better engineer.',
+      body: `
+        <p>JavaScript has a reputation for weirdness. <code>typeof null === 'object'</code>. <code>[] + [] === ""</code>. <code>0.1 + 0.2 !== 0.3</code>. These aren't bugs. They're the predictable output of a well-defined (if occasionally surprising) set of rules.</p>
+        <p>Understanding those rules removes the magic — and the fear.</p>
+
+        <h3>The Event Loop</h3>
+        <p>JavaScript is single-threaded. One thing happens at a time. The event loop is the mechanism that makes this feel concurrent.</p>
+        <div class="artHighlight">
+          <strong>The mental model</strong>
+          Call stack → Web APIs → Callback queue → Microtask queue. Promises and async/await sit in the microtask queue, which drains completely before the callback queue gets a turn. This is why a resolved Promise always runs before a setTimeout(..., 0).
+        </div>
+        <p>Once this clicks, <code>async/await</code> stops being magic and starts being predictable. You know exactly when your code will run, and in what order.</p>
+
+        <h3>Closures Are Not Magic</h3>
+        <p>A closure is a function that remembers the variables from its outer scope — even after the outer function has returned. That's it. The "remembering" happens because the inner function holds a reference to the outer scope's environment object, which keeps it alive in memory.</p>
+        <ul>
+          <li>Every function creates a new scope</li>
+          <li>Inner functions have a reference to their outer scope</li>
+          <li>That reference keeps the outer scope alive for as long as the inner function exists</li>
+          <li>This is how module patterns, memoisation, and most React hooks work</li>
+        </ul>
+
+        <h3>Prototypal Inheritance</h3>
+        <p>JavaScript doesn't have classical inheritance. It has prototypal inheritance. Every object has an internal <code>[[Prototype]]</code> link to another object. Property lookups walk this chain until they find the property or hit <code>null</code>.</p>
+        <p><code>class</code> syntax in ES6 is syntactic sugar over this mechanism. It doesn't change the underlying model — it just makes it easier to write.</p>
+
+        <blockquote>"JavaScript's prototype chain is not a bug to work around. It's a feature to understand. When you understand it, the class syntax becomes a convenience, not a mystery."</blockquote>
+
+        <h3>The Coercion Rules</h3>
+        <p>Type coercion follows deterministic rules. <code>==</code> coerces before comparing. <code>===</code> does not. The unexpected results from <code>==</code> comparisons aren't random — they follow the Abstract Equality Comparison algorithm, which you can read in the spec.</p>
+        <p>The practical takeaway: use <code>===</code> everywhere except when you specifically want type coercion, and then be explicit about why.</p>
+
+        <h3>Memory and Garbage Collection</h3>
+        <p>Modern JavaScript engines use mark-and-sweep garbage collection. Objects that are reachable from the root (global scope) are kept. Objects that are not — even if they reference each other — are collected.</p>
+        <p>Most memory leaks in JavaScript come from holding references you didn't mean to hold: event listeners not removed, closures capturing large objects, timers not cleared. Profile before optimising, and know where to look.</p>
+      `
+    }
+  ];
+
+  let currentIdx = 0;
+
+  /* ── DOM refs ── */
+  const modal    = document.getElementById('articleModal');
+  const backdrop = document.getElementById('articleBackdrop');
+  const drawer   = document.getElementById('articleDrawer');
+  const scroll   = document.getElementById('articleScroll');
+  const progFill = document.getElementById('artProgressFill');
+  const elKind   = document.getElementById('artKind');
+  const elTime   = document.getElementById('artReadTime');
+  const elTitle  = document.getElementById('artTitle');
+  const elSub    = document.getElementById('artSubline');
+  const elBody   = document.getElementById('artBody');
+  const elNav    = document.getElementById('artNavLabel');
+  const btnClose = document.getElementById('artClose');
+  const btnPrev  = document.getElementById('artPrev');
+  const btnNext  = document.getElementById('artNext');
+
+  /* ── Open ── */
+  function openArticle(idx) {
+    currentIdx = idx;
+    render();
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    scroll.scrollTop = 0;
+    progFill.style.width = '0%';
+    // Focus trap — first focusable inside drawer
+    setTimeout(() => btnClose.focus(), 550);
+  }
+
+  /* ── Close ── */
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ── Render article ── */
+  function render() {
+    const a = ARTICLES[currentIdx];
+    elKind.textContent  = a.kind;
+    elTime.textContent  = a.readTime;
+    elTitle.textContent = a.title;
+    elSub.textContent   = a.subline;
+    elBody.innerHTML    = a.body;
+    elNav.textContent   = (currentIdx + 1) + ' / ' + ARTICLES.length;
+    btnPrev.disabled    = currentIdx === 0;
+    btnNext.disabled    = currentIdx === ARTICLES.length - 1;
+    scroll.scrollTop    = 0;
+    progFill.style.width = '0%';
+  }
+
+  /* ── Reading progress ── */
+  scroll.addEventListener('scroll', () => {
+    const max = scroll.scrollHeight - scroll.clientHeight;
+    const pct = max > 0 ? (scroll.scrollTop / max) * 100 : 0;
+    progFill.style.width = pct + '%';
+  }, { passive: true });
+
+  /* ── Navigation ── */
+  btnPrev.addEventListener('click', () => {
+    if (currentIdx > 0) { currentIdx--; render(); }
+  });
+  btnNext.addEventListener('click', () => {
+    if (currentIdx < ARTICLES.length - 1) { currentIdx++; render(); }
+  });
+
+  /* ── Close triggers ── */
+  btnClose.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowRight' && currentIdx < ARTICLES.length - 1) { currentIdx++; render(); }
+    if (e.key === 'ArrowLeft'  && currentIdx > 0) { currentIdx--; render(); }
+  });
+
+  /* ── Wire up post cards ── */
+  document.querySelectorAll('.post[data-post]').forEach(card => {
+    const idx = parseInt(card.dataset.post, 10);
+
+    // Click anywhere on the card
+    card.addEventListener('click', e => {
+      // Don't fire twice if the arrow was clicked (it's inside the card)
+      e.stopPropagation();
+      openArticle(idx);
+    });
+
+    // Also wire the arrow specifically (redundant but explicit)
+    const arrow = card.querySelector('.postArrow');
+    if (arrow) {
+      arrow.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openArticle(idx);
+        }
+      });
+    }
+  });
+
+})();
+</script>
+
+
+
+<section id="contact">
+
+  <!-- Col 1: Info -->
+  <div data-sr>
+    <div class="sTag"><span class="sTagN">07</span>&nbsp;&nbsp;Get In Touch</div>
+    <h2 class="sHL">Let's<br><em>Build</em><br>Together</h2>
+    <div class="cInfoWrap">
+      <div class="cInfoLine">
+        <span class="cInfoLbl">Status</span>
+        <span class="cInfoVal">
+          <span class="cStatus"><span class="statusDot"></span>Open to new projects</span>
+        </span>
+      </div>
+      <div class="cInfoLine">
+        <span class="cInfoLbl">Email</span>
+        <span class="cInfoVal"><a href="mailto:haitham@example.com">haitham@example.com</a></span>
+      </div>
+      <div class="cInfoLine">
+        <span class="cInfoLbl">Location</span>
+        <span class="cInfoVal">Mombasa, Kenya</span>
+      </div>
+      <div class="cInfoLine">
+        <span class="cInfoLbl">Response</span>
+        <span class="cInfoVal">Within 24 hours</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Col 2: Form -->
   <div class="cFormWrap" data-sr data-d="1">
     <div class="fRow"><input type="text" id="fn" placeholder="Your Name" required><label for="fn">Your Name</label></div>
     <div class="fRow"><input type="email" id="fe" placeholder="Email Address" required><label for="fe">Email Address</label></div>
@@ -1474,8 +2060,25 @@ a,button,.svc,.wItem,.sk,.post,.fSocial { -webkit-tap-highlight-color:transparen
       <p class="fNote">No spam.<br>Just real conversations.</p>
     </div>
   </div>
-</section>
 
+  <!-- Col 3: Map -->
+  <div class="cMapWrap" data-sr data-d="2">
+    <div class="cMapLabel">Based In</div>
+    <div class="cMapFrame">
+      <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127991.8!2d39.6682!3d-4.0435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184012e8c0c3da4d%3A0xcf5a84d2e8f7c98b!2sMombasa%2C%20Kenya!5e0!3m2!1sen!2s!4v1"
+  loading="lazy"
+  allowfullscreen=""
+  title="Mombasa, Kenya">
+</iframe>
+      <div class="cMapPing">
+        <span class="statusDot"></span>
+        Mombasa, Kenya
+      </div>
+    </div>
+  </div>
+
+</section>
 <!-- FOOTER -->
 <footer>
   <div class="fBrand">HAITHAM<span>.</span></div>
@@ -1690,6 +2293,86 @@ const stObs = new IntersectionObserver(entries => {
 const orb = document.querySelector('.orbWrap');
 if (orb) stObs.observe(orb);
 
+// ── EmailJS Config ──────────────────────────────────────────
+const EJS_PUBLIC_KEY  = "annlBo0FhDzRLjpXp";   // from Account page
+const EJS_SERVICE_ID  = "service_bsxez74";   // from Email Services
+const EJS_TEMPLATE_ID = "template_z3i1xnn";  // from Email Templates
+
+// ── Init ────────────────────────────────────────────────────
+emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+
+// ── Send Handler ────────────────────────────────────────────
+document.getElementById("sendBtn").addEventListener("click", async () => {
+  const name    = document.getElementById("fn").value.trim();
+  const email   = document.getElementById("fe").value.trim();
+  const subject = document.getElementById("fs").value.trim();
+  const message = document.getElementById("fm").value.trim();
+  const btn     = document.getElementById("sendBtn");
+
+  // Basic validation
+  if (!name)    return shake("fn",  "Please enter your name");
+  if (!email || !isValidEmail(email)) return shake("fe", "Please enter a valid email");
+  if (!message) return shake("fm",  "Please write a message");
+
+  // Loading state
+  btn.disabled    = true;
+  btn.textContent = "Sending…";
+
+  try {
+    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      from_name:    name,
+      from_email:   email,
+      subject:      subject || "No subject",
+      message:      message,
+      reply_to:     email,
+    });
+
+    // Success
+    btn.textContent = "Message Sent ✓";
+    btn.style.background = "#22c55e";
+    clearForm();
+
+    setTimeout(() => {
+      btn.textContent      = "Send Message  →";
+      btn.style.background = "";
+      btn.disabled         = false;
+    }, 4000);
+
+  } catch (err) {
+    console.error("EmailJS error:", err);
+    btn.textContent      = "Failed — Try Again";
+    btn.style.background = "#ef4444";
+    btn.disabled         = false;
+
+    setTimeout(() => {
+      btn.textContent      = "Send Message  →";
+      btn.style.background = "";
+    }, 3000);
+  }
+});
+
+// ── Helpers ─────────────────────────────────────────────────
+function isValidEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
+function shake(id, hint) {
+  const el = document.getElementById(id);
+  el.style.outline = "2px solid #ef4444";
+  el.placeholder   = hint;
+  el.focus();
+  el.animate([
+    { transform: "translateX(-6px)" },
+    { transform: "translateX(6px)"  },
+    { transform: "translateX(-4px)" },
+    { transform: "translateX(0)"    },
+  ], { duration: 300, easing: "ease-out" });
+  el.addEventListener("input", () => el.style.outline = "", { once: true });
+}
+
+function clearForm() {
+  ["fn", "fe", "fs", "fm"].forEach(id => document.getElementById(id).value = "");
+}
 /* ═══════════════════════════════
    CONTACT SUBMIT
 ═══════════════════════════════ */
@@ -1721,4 +2404,4 @@ if (contactEl) contObs.observe(contactEl);
 
 </script>
 </body>
-                                             </html>
+         </html>
